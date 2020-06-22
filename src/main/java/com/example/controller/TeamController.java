@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("")
-public class BaseballTeamController {
+public class TeamController {
 
 	@RequestMapping("/index")
 	public String index() {
