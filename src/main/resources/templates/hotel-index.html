@@ -9,6 +9,7 @@
     <h1>ホテル検索</h1>
     <form th:action="@{/hotel/search}" method="post">
     	<input type="text" name="price">
+    	<span>円以下</span><br>
     	<button>検索</button>
     </form>
     <table th:if="${hotelList.size() > 0}" th:each="hotel : ${hotelList}">
