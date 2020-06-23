@@ -23,7 +23,8 @@ public class HotelController {
 	 * @return ホテル検索入力画面
 	 */
 	@RequestMapping("")
-	public String index() {
+	public String index(Model model) {
+		
 		return "hotel-index";
 	}
 	
@@ -38,13 +39,13 @@ public class HotelController {
 	public String search(Integer price, Model model) {
 		List<Hotel> hotelList;
 		if(price == null) {
-			hotelList = hotelService.showNarrowList(price);
-		} else {
 			hotelList = hotelService.showList();
+		} else {
+			hotelList = hotelService.showNarrowList(price);
 		}
 		
 		model.addAttribute("hotelList", hotelList);
 		
-		return "hotel-index";
+		return index(model);
 	}
 }

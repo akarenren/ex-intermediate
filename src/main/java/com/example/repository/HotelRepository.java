@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Hotel;
@@ -47,9 +49,10 @@ public class HotelRepository {
 	 * @param inputPrice 入力された価格
 	 * @return　inputPrice以下の値段のホテル
 	 */
-	public List<Hotel> findByPrice(Integer inputPrice) {
-		String sql = "SELECT id, area_name, hotel_name, address, nearest_station, price, parking FROM hotels WHERE price <= inputPrice;";
-		List<Hotel> narrowHotelList = template.query(sql, HOTEL_ROW_MAPPER);
+	public List<Hotel> findByPrice(Integer price) {
+		String sql = "SELECT id, area_name, hotel_name, address, nearest_station, price, parking FROM hotels WHERE price <= :price;";
+		SqlParameterSource param = new MapSqlParameterSource("price", price);
+		List<Hotel> narrowHotelList = template.query(sql, param, HOTEL_ROW_MAPPER);
 		
 		return narrowHotelList;
 	}
