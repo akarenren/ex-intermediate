@@ -36,16 +36,35 @@ public class HotelController {
 	 * @return　検索結果画面
 	 */
 	@RequestMapping("/search")
-	public String search(Integer price, Model model) {
+	public String search(String price, Model model) {
 		List<Hotel> hotelList;
-		if(price == null) {
+		
+		if("".equals(price)) {
+			hotelList = hotelService.showList();
+		} else if(isNumber(price) == false){
 			hotelList = hotelService.showList();
 		} else {
-			hotelList = hotelService.showNarrowList(price);
+			int changeprice = Integer.parseInt(price);
+			hotelList = hotelService.showNarrowList(changeprice);
 		}
 		
 		model.addAttribute("hotelList", hotelList);
 		
 		return index(model);
+	}
+	
+	/**
+	 * 入力値を数値か判定.
+	 * 
+	 * @param num：入力値
+	 * @return　入力された値が数値ならtrueそれ以外はfalse
+	 */
+	public boolean isNumber(String price) {
+	    try {
+	        Integer.parseInt(price);
+	        	return true;
+	    } catch (NumberFormatException e) {
+	        	return false;
+	    }
 	}
 }
